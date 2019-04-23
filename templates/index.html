@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twittah</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        .form-row{
+            display: flex;
+            margin-top: 50px;
+            margin-left: 38%;
+        }
+        .btn-primary{
+            margin-left: 10px;
+        }
+        .btn-danger{
+            margin-left:10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style = "text-align: center">Twitter word counter</h1>
+    <form>
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" name = "username" id="inlineFormInputGroup" placeholder="Username">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2">Execute</button>
+                <a href="#">
+                    <button type="reset" class="btn btn-danger mb-2">Reset</button>
+                </a>
+            </div>
+        </div>
+    </form>
+    <ul>
+        <li><h3>{{ username }}</h3></li>
+        {% for palabra in word_list %}
+        <li> {{ palabra }} </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
