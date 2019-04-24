@@ -27,27 +27,29 @@
 </head>
 <body>
     <h1 style = "text-align: center">Twitter word counter</h1>
-    <form>
-        <div class="form-row align-items-center">
-            <div class="col-auto">
-                <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" name = "username" id="inlineFormInputGroup" placeholder="Username">
+
+        <form action="/GetData/" method="post"> {% csrf_token %}
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                    <div class="input-group mb-2" style="display: inline">
+                        <input type="text" class="form-control" name = "username" id = "id_username" placeholder="Username" required="required">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-2" value = "Execute">
                 </div>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2">Execute</button>
-                <a href="#">
-                    <button type="reset" class="btn btn-danger mb-2">Reset</button>
-                </a>
-            </div>
-        </div>
-    </form>
-    <ul>
-        <li><h3>{{ username }}</h3></li>
-        {% for palabra in word_list %}
-        <li> {{ palabra }} </li>
-        {% endfor %}
-    </ul>
+        </form>
+        <form style ="margin-left: 50%;" action="/DeleteData/" method="post"> {% csrf_token %}
+            <input type="submit" class="btn btn-danger mb-2" value="Reset">
+        </form>
+
+    {% for elemento in word_list %}
+        <h3>{{ elemento.username}}</h3>
+        <ul id="id_list">
+            <li> {{ elemento.content }} </li>
+        </ul>
+    {% endfor %}
 </body>
 </html>

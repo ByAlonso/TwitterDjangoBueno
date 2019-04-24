@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path(r'Twitter_word_counter/',include('Twitter_word_counter.urls')),
-    path(r'admin/', admin.site.urls),
+    path('', include('Twitter_word_counter.urls')),
+    path('admin/', admin.site.urls),
 ]

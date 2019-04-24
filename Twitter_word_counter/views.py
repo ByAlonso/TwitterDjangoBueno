@@ -1,28 +1,37 @@
 from django.shortcuts import render
 from .funciones import source
+from .models import WordList
+from django.http import JsonResponse
 import unittest
 from unittest.mock import Mock,MagicMock
 
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.conf.urls import url
 # Create your views here.
 
 
-#Falla al principio no deberia mostrar nada
-#Cuando no encuentra el usuario no tiene que petar
 #Falla el boton de reset
 
-def index(request):
-    username = GetUsername(request)
-    twitter_obj = source.twitter2(username)
 
-    if username == None:
-        word_list = ["Tienes que introducir un username valido"]
-    else:
+def PageView(request):
+    word_list = WordList.objects.all()
+    return render(request, 'index.html',{'word_list' : word_list})
+
+def GetData(request):
+    if WordList.objects.all().count() != 0:
+        WordList.objects.all().delete()
+
+    try:
+        username = request.POST['username']
+        twitter_obj = source.twitter2(username)
         word_list = twitter_obj.word_count()
+        word_list = WordList(username= username,content = word_list)
+        word_list.save()
+    except:
+        return HttpResponseRedirect('/')
 
-    print(username)
-    return render(request, 'index.html', {'word_list' : word_list, 'username' : username})
+    return HttpResponseRedirect('/')
 
-def GetUsername(request):
-    return request.GET.get('username')
+def DeleteData(request):
+    WordList.objects.all().delete()
+    return HttpResponseRedirect('/')
