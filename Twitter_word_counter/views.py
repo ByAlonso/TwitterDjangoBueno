@@ -1,16 +1,11 @@
 from django.shortcuts import render
 from .funciones import source
 from .models import WordList
-from django.http import JsonResponse
-import unittest
-from unittest.mock import Mock,MagicMock
+
 
 from django.http import HttpResponse,HttpResponseRedirect
 from django.conf.urls import url
 # Create your views here.
-
-
-#Falla el boton de reset
 
 
 def PageView(request):
@@ -23,7 +18,7 @@ def GetData(request):
 
     try:
         username = request.POST['username']
-        twitter_obj = source.twitter2(username)
+        twitter_obj = source.Twitter2(username)
         word_list = twitter_obj.word_count()
         word_list = WordList(username= username,content = word_list)
         word_list.save()
