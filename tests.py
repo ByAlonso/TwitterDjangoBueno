@@ -8,9 +8,9 @@ from selenium.webdriver.common.keys import Keys
 class PythonTwitterWeb(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox(executable_path=r'geckodriver.exe')
-        self.driver.get('http://127.0.0.1:9000/')
+        self.driver.get('http://127.0.0.1:8000/')
         self.username_element = self.driver.find_element_by_name("username")
-        self.button_element_reset = self.driver.find_element_by_xpath('/html/body/form[2]/input[2]')
+        self.button_element_reset = self.driver.find_element_by_xpath('/html/body/div/div/form/div[2]/input[2]')
 
     def test_simple_search(self):
         self.username_element.clear()
@@ -39,10 +39,9 @@ class PythonTwitterWeb(unittest.TestCase):
         self.driver.quit()
 
     def test_empty_submit(self):
-        button_element_execute = self.driver.find_element_by_xpath('/html/body/form[1]/div/div[2]/input')
+        button_element_execute = self.driver.find_element_by_xpath('/html/body/div/div/form/div[2]/input[1]')
         button_element_execute.click()
-        with self.assertRaises(common.exceptions.NoSuchElementException):
-            self.driver.find_element_by_id("id_list")
+        self.assertIsNotNone(self.driver.find_element_by_id("id_list"))
         self.driver.quit()
 
     def test_empty_reset(self):
@@ -55,7 +54,7 @@ class PythonTwitterWeb(unittest.TestCase):
     def test_execute_button(self):
         self.username_element.clear()
         self.username_element.send_keys("@realDonaldTrump")
-        button_element_execute = self.driver.find_element_by_xpath('/html/body/form[1]/div/div[2]/input')
+        button_element_execute = self.driver.find_element_by_xpath('/html/body/div/div/form/div[2]/input[1]')
         button_element_execute.click()
         self.assertIsNotNone(self.driver.find_element_by_id("id_list"))
         self.driver.quit()
