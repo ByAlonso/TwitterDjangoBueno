@@ -1,12 +1,13 @@
 import unittest
 from selenium import common
 from selenium import webdriver
+import time
 from selenium.webdriver.common.keys import Keys
 
 
 class PythonTwitterWeb(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Firefox(executable_path=r'C:\Users\villa\Downloads\gecko\geckodriver.exe')
+        self.driver = webdriver.Firefox()
         self.driver.get('http://127.0.0.1:9000/')
         self.username_element = self.driver.find_element_by_name("username")
         self.button_element_reset = self.driver.find_element_by_xpath('/html/body/form[2]/input[2]')
@@ -19,7 +20,7 @@ class PythonTwitterWeb(unittest.TestCase):
         self.assertIsNotNone(lista)
         self.driver.quit()
 
-    def test_reset(self):
+    def test_reset_after_simple_search(self):
         self.username_element.clear()
         self.username_element.send_keys("@realDonaldTrump")
         self.username_element.submit()
@@ -30,14 +31,14 @@ class PythonTwitterWeb(unittest.TestCase):
 
     def test_invalid_username(self):
         self.username_element.clear()
-        self.username_element.send_keys("@realDonaldTrump")
+        self.username_element.send_keys("@sadYato1")
         self.username_element.submit()
+        time.sleep(5)
         with self.assertRaises(common.exceptions.NoSuchElementException):
             self.driver.find_element_by_id("id_list")
         self.driver.quit()
 
     def test_empty_submit(self):
-        self.button_element_reset.click()
         button_element_execute = self.driver.find_element_by_xpath('/html/body/form[1]/div/div[2]/input')
         button_element_execute.click()
         with self.assertRaises(common.exceptions.NoSuchElementException):
@@ -45,10 +46,18 @@ class PythonTwitterWeb(unittest.TestCase):
         self.driver.quit()
 
     def test_empty_reset(self):
-        self.button_element_reset.click()
+        time.sleep(5)
         self.button_element_reset.click()
         with self.assertRaises(common.exceptions.NoSuchElementException):
             self.driver.find_element_by_id("id_list")
+        self.driver.quit()
+
+    def test_execute_button(self):
+        self.username_element.clear()
+        self.username_element.send_keys("@realDonaldTrump")
+        button_element_execute = self.driver.find_element_by_xpath('/html/body/form[1]/div/div[2]/input')
+        button_element_execute.click()
+        self.assertIsNotNone(self.driver.find_element_by_id("id_list"))
         self.driver.quit()
 
 
