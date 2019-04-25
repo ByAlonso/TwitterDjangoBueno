@@ -44,6 +44,13 @@ class PythonTwitterWeb(unittest.TestCase):
             self.driver.find_element_by_id("id_list")
         self.driver.quit()
 
+    def test_empty_reset(self):
+        self.button_element_reset.click()
+        self.button_element_reset.click()
+        with self.assertRaises(common.exceptions.NoSuchElementException):
+            self.driver.find_element_by_id("id_list")
+        self.driver.quit()
+
 
 if __name__ == '__main__':
     unittest.main()
