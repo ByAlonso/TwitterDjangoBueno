@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 class PythonTwitterWeb(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Firefox(executable_path=r'geckodriver.exe')
         self.driver.get('http://127.0.0.1:9000/')
         self.username_element = self.driver.find_element_by_name("username")
         self.button_element_reset = self.driver.find_element_by_xpath('/html/body/form[2]/input[2]')
